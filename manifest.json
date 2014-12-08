@@ -1,0 +1,27 @@
+    {
+      "manifest_version": 2,
+
+      "name": "Webslite Premium",
+      "description": "Webslite - Turn Website into Webslide",
+      "version": "5.0",
+
+      "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "webslite.html"
+      },
+
+     "icons": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "126": "icon126.png"
+      },
+
+      "content_scripts": [ {
+         "js": [ "jquery-2.1.1.min.js", "webslite.js", "unslider.js"],
+         "matches": [ "http://*/*", "https://*/*" ]
+      }],
+
+      "permissions": [
+        "http://*/*"
+      ]
+    }

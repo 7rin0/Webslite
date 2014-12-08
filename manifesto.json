@@ -1,0 +1,34 @@
+{
+    "manifest_version" : 2,
+    "name" : "Webslite",
+    "version" : "5.0",
+    "version_name" : "beta",
+    "description" : "Convert Any Website to Webslide",
+    "update_url" : "http://luiseverino.com/chrome/webslite.xml",
+    "icons" : { "128" : "webslite.png" },
+    "background" : {
+        "persistent" : false,
+        "scripts" : ["webslite.js"]
+    },
+    "permissions" : [
+        "tabs",
+        "http://*/*"
+    ],
+    "browser_action" : {
+        "default_title" : "Webslite Action",
+        "default_icon" : "icon_19.png",
+        "default_popup" : "webslite.html"
+    },
+    "page_action" : {
+        "default_icon" : "",
+        "default_title" : "",
+        "default_popup" : ""
+    },
+    "content_scripts" : [
+        {
+            "matches": "http://*/*",
+            "css" : "webslite_slider.css",
+            "js" : "webslite_slider.js"
+        }
+    ]
+}

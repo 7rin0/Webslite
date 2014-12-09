@@ -5,106 +5,44 @@
  * Webslide
  */
 
-$( 'body' ).on( 'click', function () {
-    var hasClassBody = $('body').hasClass('slide');
+// Get images from facebook
+function getImage_facebook () {
 
-    if (!hasClassBody) {
-        // Add the Slider
-        $( 'head > style' ).prepend( '.webslite { position: relative; overflow: auto; display:none } .webslite li { list-style: none; } .webslite ul li { float: left; }' );
-        $( 'body' ).prepend( '<div class="webslite"><ul></ul></div>' );
-        $( 'body' ).append( "<script>$(function() { $('.webslite').unslider(); });</script>" );
+    var imgs = $('img'),
+        body = $( 'body'),
+        outImagem = '',
+        img_src = '',
+        img_width = '',
+        hasSlide = body.hasClass( 'slide'),
+        increment = 0;
 
+    imgs.each( function ( index ) {
+        img_src = $( this ).attr('src');
+        img_width = $( this ).width();
+        outImagem = '<img src="'+ img_src +'" />';
 
-        var imagens = $('img'),
-            noscripts = $('noscript'),
-            setWidth = 500,
-            imagens_print = {};
+        // Validate Images
+        if ( img_width > 200 ) {
+            increment++;
+            $('.fotorama').append(outImagem);
 
-        //$results = getImage( imagens, setWidth );
-        getImage_noscript(noscripts);
-        $( this).addClass('slide');
-    }
-});
-
-
-// Set Dimensions
-function setDimensions( value, genRatio ) {
-    // Change Ratio
-    var vsize = value.split('='),
-        vsize_var = vsize[0],
-        vsize_value = vsize[1];
-
-    return ( vsize_var + '=' + vsize_value * genRatio );
-}
-
-
-// Images Objects
-function getImage ( imagens, setWidth ) {
-    // Tratar das imagens
-    imagens.each(function (index) {
-        var imagem = $(this).context,
-            imagem_src = imagem.src,
-            imagem_alt = imagem.alt,
-            imagem_width = imagem.width,
-            imagem_height = imagem.height,
-            genRatio = setWidth / imagem_width ,
-            imagem_qs = imagem_src.split('&');
-
-        // If Contains Any Variables
-        if (imagem_qs[1]) {
-            // Validate QSA
-            var validateQsa = false;
-
-            $.each( imagem_qs, function( index, value ) {
-                // If contains variable W= , for Sapo.pt
-                var widthExist = value.indexOf('W=') >= 0,
-                    heightExist = value.indexOf('H=') >= 0,
-                    validDim = widthExist || heightExist;
-
-                // If is Width or Height
-                if ( validDim ) {
-                    validateQsa = true;
-                    // set dimensions
-                    imagem_qs[index] = setDimensions( value, genRatio );
-                }
-            });
-
-            // If found valid Query reconstruct
-            if (validateQsa) {
-                imagem_src = $.param(imagem_qs);
-
-                console.log( imagem_qs );
-            }
+            console.log(img_src);
+            //console.log( $.get( img_src ) );
         }
-    });
-}
 
-// Images from noscript
-function getImage_noscript ( objectos ) {
-    objectos.each( function ( index ) {
-        // Generate Our Elements from Text
-        var objecto = $(this),
-            elements = objecto.text(),
-            imagem = $( elements),
-            imagem_src = imagem.attr('src'),
-            imagem_query = imagem_src.split("?"),
-
-            outImagem = '<li><img width="500" src="'+ imagem_query[0] +'" /></li>';
-
-
-        $( '.webslite > ul' ).append( outImagem );
-        //console.log( imagem );
-        console.log( imagem_src );
-        console.log( imagem_query );
-
-        // limit to 10 for now
-        if ( index > 10 ) {
-            $( '.webslite' ).show();
+        // Limit Images
+        if (increment > 20) {
             return false;
         }
     });
+
+    // Show Slider When All Content Loaded
+    if (!hasSlide) {
+        body.addClass('slide');
+        $('#webslider').delay(5000).fadeIn(1000);
+    }
 }
 
-
-//$('body').prepend("<img width='200px' style='display:inline' src='" + imagem_src + "' /><br>"+ imagem_src + '<br><br>');
-//console.log($(this).context.src)
+// Load Extension After Other Scripts
+$( 'body' ).prepend( "<div id='webslider' style='display: none; margin:5% auto; width: 400px'><div class='fotorama' data-width='100%' data-ratio='800/600'></div></div>" );
+getImage_facebook();

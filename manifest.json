@@ -10,6 +10,13 @@
         "default_popup": "webslite.html"
       },
 
+        /**
+      "page_action": {
+        "default_icon": { "38": "icon38.png"},
+        "default_popup": "webslite.html",
+        "default_title": "Webslite Premium 5.0"
+      },**/
+
      "icons": {
         "16": "icon16.png",
         "48": "icon48.png",
@@ -24,6 +31,7 @@
       }],
 
       "permissions": [
-        "http://*/*"
+        "http://*/*",
+        "contentSettings"
       ]
     }

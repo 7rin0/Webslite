@@ -8,7 +8,7 @@
     "icons" : { "128" : "webslite.png" },
     "background" : {
         "persistent" : false,
-        "scripts" : ["webslite.js"]
+        "scripts" : ["webslite_in.js"]
     },
     "permissions" : [
         "tabs",

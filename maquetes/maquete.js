@@ -106,3 +106,36 @@ function getImage_noscript ( objectos ) {
 
 //$('body').prepend("<img width='200px' style='display:inline' src='" + imagem_src + "' /><br>"+ imagem_src + '<br><br>');
 //console.log($(this).context.src)
+
+
+
+//****************** generateSlide ******************//
+function getSlide ( element ) {
+
+    // Validate Element
+    var valid_element = ;
+
+    // Getters
+    if ( valid_element ) {
+        $('.fotorama').append( valid_element );
+    }
+
+}
+
+//****************** closestValues ******************//
+function getAlt ( image ) {
+    var closeLink = image.closest("a"),
+        closeLink_alt = closeLink.attr("alt"),
+        closeLink_title = closeLink.attr("title"),
+        closeLink_text = closeLink.text(),
+        closeLink_href = closeLink.attr("href"),
+        closeParagraph = image.closest("p"),
+        description = image.attr('alt'),
+        data;
+
+    data += "<p> LINK: "+ closeLink_href +"</p><br><br>";
+    data += "<p> ALT: "+ description +"</p><br><br>";
+    data += "<p> COMPLETO: <a target='blank' alt='"+ description +"' href='"+ closeLink_href +"'>"+ description +"</a></p>";
+
+    $('.fotorama').append('<div>'+ data +'</div>');
+}

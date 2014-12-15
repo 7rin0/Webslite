@@ -3,4 +3,4 @@
  */
 
 //****************** startWebslite ******************//
-startWebslite();
+getWebslite();

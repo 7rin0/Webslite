@@ -6,81 +6,175 @@
  */
 
 //****************** getImages ******************//
+/**
+ * Get Any Image
+ * From Any Data
+ * Get Only and Generate
+ */
 function getImages() {
 
-    var image,
-        imgGroup,
-        imgs = $('img'),
-        body = $( 'body'),
+    // Vars
+    var data = $('a, img'),
+        data_count = data.length,
         noscripts = $('noscript'),
-        hasSlide = body.hasClass( 'slide');
+        json_value,
+        json_images = [];
 
-    imgs.each( function ( index ) {
-        image = $(this);
-
-        if ( image ) {
-            generateSlide( image );
-            if ( index > 1000 ) { return false; }
+    // Each image detect, validate and load
+    data.each( function ( index ) {
+        json_value = validateElement ( $(this) );
+        if ( json_value ) {
+            json_images.push( json_value );
+            console.log(json_value);
         }
-
     });
 
+    setInterval(function () {
+        console.log($('.badge-item-img'));
+    }, 5000);
 }
 
-//****************** generateSlide ******************//
-function generateSlide ( image ) {
+//****************** validateElement ******************//
 
-    // Declare Vars
-    var outImagem ,
-        valid_image,
-        img_src = (image.attr('src')) ? image.attr('src') : '' ,
-        img_alt = (image.attr('alt')) ? image.attr('alt') : '' ,
-        img_width = (image.width()) ? image.width() : '' ,
-        img_height = (image.height()) ? image.height() : '';
+function validateElement( element ) {
+    // Vars
+    var valid_image,
+        valid_args,
+        alt_image,
+        url_image,
+        link_image,
+        createJson;
 
-    // Validate Image
-    if (!img_width) {
-        var imagem = $( '<img />').attr('src', img_src).load( function () {
-            img_width = this.naturalWidth;
-            img_height = this.naturalHeight;
-        });
+    // Detect element type
+    if ( element.is('a') ) {
+        url_image = element.attr('href');
+        alt_image = element.text();
+        // Validate URL String
+        valid_image = ( url_image ) ? url_image.search(/(jpg|png|svg|gif)/gi) : -1;
+    } else if ( element.is('img') ) {
+        url_image = element.attr('src');
+        alt_image = element.attr('alt');
+        valid_image = ( url_image ) ? 1 : -1;
+
+        console.log(url_image);
+    } else { return null; }
+
+    // Validate Image Url
+    url_image = replaceThumbs( url_image );
+
+    // If Alt is not set
+    if ( !alt_image ) {
+        alt_image = findDescription( element );
     }
-    valid_image = img_width > 150 && img_height > 150;
 
-    if ( image === 44 ) {
-        if (image.attr('data-src') != 'undefined') {
-            img_src = image.attr('data-src');
-            img_alt = image.attr('data-alt');
-            img_width = 200;
-            img_height = 200;
+    // Get Link Image
+    link_image = element.closest("a");
+    link_image = link_image.attr('href');
+    if ( !link_image ) {
+        link_image = url_image;
+    }
+
+    // Valid arguments
+    valid_args = (valid_image != -1) && element && url_image && alt_image && link_image;
+
+    // If Image is Valid
+    if ( valid_args ) {
+        createJson = {
+            alt: alt_image,
+            url: url_image,
+            link: link_image
+        };
+        return createJson;
+    } else { return null; }
+}
+
+
+//****************** loadImage ******************//
+function findDescription ( element ) {
+    var textImage = ( element.parent().text().length > 10 ) ? element.parent().text() : element.parent().parent().text(),
+        title = $( 'title').text()
+        ;
+
+    if ( textImage.length < 1 ) {
+        textImage = title;
+    }
+
+    textImage = $.trim( textImage );
+
+    return textImage;
+}
+//****************** loadImage ******************//
+function getImage( element, url_image, alt_image ) {
+
+    var $imagem = $('<img>').attr({'src': url_image, 'alt': alt_image, 'data-caption': alt_image });
+
+    $imagem.on('load', function(){
+        $( this ).attr('width', this.naturalWidth);
+        $( this ).attr('height', this.naturalHeight);
+
+        // Validate Size
+        var valid_size = this.naturalWidth > 120 && this.naturalHeight > 120;
+
+        if ( valid_size ) {
+            $('.fotorama').append( $( this ) );
+        }
+    });
+}
+
+//****************** replaceThumbs ******************//
+
+function replaceThumbs( url_image ) {
+
+    /** Replace: If has Thumbs in url **/
+    if ( url_image.indexOf('thumbs/thumbs_') != -1 ) {
+        url_image = url_image.replace('thumbs/thumbs_', '');
+    }
+
+    /** VALIDATE QSA **/
+    var url_image_qsa = url_image.split('&');
+
+    if (url_image_qsa[1]) {
+        // Validate QSA
+        var validateQsa = false;
+
+        $.each( url_image_qsa, function( index, value ) {
+            // If contains variable W= , for Sapo.pt
+            var widthExist = value.indexOf('W=') >= 0,
+                heightExist = value.indexOf('H=') >= 0,
+                validDim = widthExist || heightExist;
+
+            // If is Width or Height
+            if ( validDim ) {
+                validateQsa = true;
+                // set dimensions
+                url_image_qsa[index] = setDimensions( value, 2 );
+
+            }
+        });
+
+        // If found valid Query reconstruct
+        if (validateQsa) {
+            url_image = $.trim( url_image_qsa.join('&') );
+
         }
     }
 
-    // Getters
-    if ( valid_image ) {
-        outImagem = '<a href="'+ img_src +'" data-caption="'+ img_alt +'" ></a>';
-        $('.fotorama').append( outImagem );
-        closestValues( image );
-    }
+    return url_image;
 }
 
-//****************** closestValues ******************//
-function closestValues ( image ) {
-    var closeLink = image.closest("a"),
-        closeLink_alt = closeLink.attr("alt"),
-        closeLink_href = closeLink.attr("href"),
-        closeParagraph = image.closest("p"),
-        data;
+//****************** setDimensions ******************//
+// Set Dimensions
+function setDimensions( value, genRatio ) {
+    // Change Ratio
+    var vsize = value.split('='),
+        vsize_var = vsize[0],
+        vsize_value = vsize[1];
 
-    data += "<p> LINK: "+ closeLink_href +"</p><br><br>";
-    data += "<p> ALT: "+ closeLink_alt +"</p><br><br>";
-    data += "<p> COMPLETO: <href target='_blank' alt='"+ closeLink_alt +"' href='"+ closeLink_href +"'>"+ closeLink_alt +"</a></p>";
-
-    $('.fotorama').append('<div>'+ data +'</div>');
+    return ( vsize_var + '=' + vsize_value * genRatio );
 }
 
 //****************** startWebslite ******************//
-function startWebslite() {
+function getWebslite() {
 
     var body = $( 'body' );
 

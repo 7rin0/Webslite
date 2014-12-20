@@ -3,4 +3,6 @@
  */
 
 //****************** startWebslite ******************//
-getWebslite();
+var scrollDetector = $(document).height() * 15;
+
+getWebslite( scrollDetector );

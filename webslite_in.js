@@ -28,6 +28,9 @@ function getImages() {
     }).ready( function () {
         loadImages( json_images );
     });
+
+    // Load Slider
+    $('#webslider').delay(1000).fadeIn(1000);
 }
 
 //****************** validateElement ******************//
@@ -59,8 +62,11 @@ function validateElement( element ) {
         valid_image = ( url_image ) ? 1 : -1;
     } else { return null; }
 
+    // No SVG no ADVERTISERS NO PUB
+    var invalide_url_image = ( url_image ) ? url_image.search(/(svg|mmpub|banner)/gi) : -1;
+
     // If no Url defined
-    if (!url_image) {
+    if (!url_image || invalide_url_image != -1) {
         return;
     }
 
@@ -124,13 +130,12 @@ function loadImages( objectos ) {
             var valid_size = this.naturalWidth > 120 && this.naturalHeight > 120;
 
             if ( valid_size ) {
-                $('.fotorama').append( $( this ) );
+                    $('#fotorama').append( $( this ) );
             }
         });
 
     }).ready ( function () {
-        var fotorama = $('#fotorama').fotorama(),
-            dataFotorama = fotorama.data('fotorama');
+        $('#fotorama').fotorama();
     });
 }
 
@@ -187,7 +192,7 @@ function setDimensions( value, genRatio ) {
 }
 
 //****************** startWebslite ******************//
-function getWebslite() {
+function getWebslite( scrollDetector ) {
 
     var body = $( 'body' );
     body.css('overflow', 'hidden');
@@ -196,36 +201,31 @@ function getWebslite() {
     body.prepend(
         "<div id='document_slider'>" +
         "<div id='webslider'>" +
-            "<div id='fotorama' class='fotorama' data-auto='false' data-width='100%' " +
-                " data-arrows='true' data-maxwidth='100%' " +
-                " data-keyboard='true' data-arrows='always' " +
-                " data-ratio='16/9' data-allowfullscreen='true' " +
+            "<div id='fotorama' data-auto='false'" +
+                " data-arrows='true' data-width='100%' " +
+                " data-keyboard='true' " +
+                " data-ratio='16/9' " +
                 " data-nav='thumbs'> " +
             "</div>" +
         "</div>" +
         "</div>"
     );
 
-    $('#document_slider').fadeIn( 10000 );
     $('#document_slider').prepend("<div id='circleG'><div id='circleG_1' class='circleG'></div>" +
         "<div id='circleG_2' class='circleG'></div>" +
         "<div id='circleG_3' class='circleG'></div>" +
-        "</div>");
+        "</div>").fadeIn( 5000 );
+
+    scrollDetector = (scrollDetector < 100000) ? scrollDetector : 100000;
+    console.log(scrollDetector);
 
     // Kill the lazyload
-    body.animate( { scrollTop: 50000 }, 10000, function () {
+    body.animate( { scrollTop: scrollDetector }, 10000, function () {
         // Get All Images
         getImages();
         // When finished add class
         body.addClass('slide');
     });
-    $( document ).ready( function () {
-        setTimeout( function () {
-            // Scroll Up
-            body.animate({scrollTop: 0}, 3000, function () {
-                // Show
-                $('#webslider').delay(1000).fadeIn(1000);
-            });
-        }, 20000);
-    });
 }
+
+console.log('uma');

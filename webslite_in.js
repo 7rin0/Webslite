@@ -14,9 +14,8 @@
 function getImages() {
 
     // Vars
-    var data = $('a, img'),
+    var data = $('a, img, noscript'),
         data_count = data.length,
-        noscripts = $('noscript'),
         json_value,
         json_images = [];
 
@@ -25,18 +24,21 @@ function getImages() {
         json_value = validateElement ( $(this) );
         if ( json_value ) {
             json_images.push( json_value );
-            console.log(json_value);
         }
+    }).ready( function () {
+        loadImages( json_images );
     });
-
-    setInterval(function () {
-        console.log($('.badge-item-img'));
-    }, 5000);
 }
 
 //****************** validateElement ******************//
 
 function validateElement( element ) {
+
+    // If noscript width image inside
+    if ( element.is('noscript') ) {
+        element = $( element.text() );
+    }
+
     // Vars
     var valid_image,
         valid_args,
@@ -55,9 +57,12 @@ function validateElement( element ) {
         url_image = element.attr('src');
         alt_image = element.attr('alt');
         valid_image = ( url_image ) ? 1 : -1;
-
-        console.log(url_image);
     } else { return null; }
+
+    // If no Url defined
+    if (!url_image) {
+        return;
+    }
 
     // Validate Image Url
     url_image = replaceThumbs( url_image );
@@ -82,7 +87,7 @@ function validateElement( element ) {
         createJson = {
             alt: alt_image,
             url: url_image,
-            link: link_image
+            blink: link_image
         };
         return createJson;
     } else { return null; }
@@ -104,20 +109,28 @@ function findDescription ( element ) {
     return textImage;
 }
 //****************** loadImage ******************//
-function getImage( element, url_image, alt_image ) {
+function loadImages( objectos ) {
 
-    var $imagem = $('<img>').attr({'src': url_image, 'alt': alt_image, 'data-caption': alt_image });
+    $( objectos).each( function () {
 
-    $imagem.on('load', function(){
-        $( this ).attr('width', this.naturalWidth);
-        $( this ).attr('height', this.naturalHeight);
+        var object = this,
+            imagem = $('<img>').attr({'src': object.url , 'alt': object.alt, 'data-caption': object.alt , 'title': object.blink });
 
-        // Validate Size
-        var valid_size = this.naturalWidth > 120 && this.naturalHeight > 120;
+        imagem.on('load', function() {
+            $( this ).attr('width', this.naturalWidth);
+            $( this ).attr('height', this.naturalHeight);
 
-        if ( valid_size ) {
-            $('.fotorama').append( $( this ) );
-        }
+            // Validate Size
+            var valid_size = this.naturalWidth > 120 && this.naturalHeight > 120;
+
+            if ( valid_size ) {
+                $('.fotorama').append( $( this ) );
+            }
+        });
+
+    }).ready ( function () {
+        var fotorama = $('#fotorama').fotorama(),
+            dataFotorama = fotorama.data('fotorama');
     });
 }
 
@@ -177,33 +190,41 @@ function setDimensions( value, genRatio ) {
 function getWebslite() {
 
     var body = $( 'body' );
+    body.css('overflow', 'hidden');
 
     // Append Slide
     body.prepend(
-        "<div id='webslider' style='display: none; margin:5% auto; max-width: 600px'>" +
-            "<div class='fotorama' data-width='100%'" +
-                "data-auto='false' data-arrows='true'" +
-                "data-keyboard='true' data-arrows='always'" +
-                "data-ratio='16/9' data-allowfullscreen='native'" +
-                "data-nav='thumbs'>" +
+        "<div id='document_slider'>" +
+        "<div id='webslider'>" +
+            "<div id='fotorama' class='fotorama' data-auto='false' data-width='100%' " +
+                " data-arrows='true' data-maxwidth='100%' " +
+                " data-keyboard='true' data-arrows='always' " +
+                " data-ratio='16/9' data-allowfullscreen='true' " +
+                " data-nav='thumbs'> " +
             "</div>" +
+        "</div>" +
         "</div>"
     );
 
+    $('#document_slider').fadeIn( 10000 );
+    $('#document_slider').prepend("<div id='circleG'><div id='circleG_1' class='circleG'></div>" +
+        "<div id='circleG_2' class='circleG'></div>" +
+        "<div id='circleG_3' class='circleG'></div>" +
+        "</div>");
+
     // Kill the lazyload
-    $( 'html, body' ).animate( { scrollTop: 100000 }, 20000 );
+    body.animate( { scrollTop: 50000 }, 10000, function () {
+        // Get All Images
+        getImages();
+        // When finished add class
+        body.addClass('slide');
+    });
     $( document ).ready( function () {
         setTimeout( function () {
-            // Get All Images
-            getImages();
-            // Start Slider
-            $('.fotorama').fotorama();
             // Scroll Up
-            $('html, body').animate({scrollTop: 0}, 3000, function () {
-                // When finished add class
-                body.addClass('slide');
+            body.animate({scrollTop: 0}, 3000, function () {
                 // Show
-                $('#webslider').delay(5000).fadeIn(1000);
+                $('#webslider').delay(1000).fadeIn(1000);
             });
         }, 20000);
     });

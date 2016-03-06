@@ -11,3 +11,4 @@ This small extension was created to learn about Chrome Extensions architecture a
 - Load unpacked extension navigate to the directory Weblite/unpacked and select it
 
 ## Enjoy!
+![alt tag](https://github.com/7rin0/Webslite/raw/master/unpacked/images/gif/show.gif)

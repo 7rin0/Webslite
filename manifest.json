@@ -1,0 +1,31 @@
+    {
+      "manifest_version": 2,
+
+      "name": "Webslite Premium",
+      "description": "Webslite - Turn Website into Webslide",
+      "version": "5.0",
+
+      "browser_action": {
+        "default_icon": "images/icon.png"
+      },
+
+      "background":{
+        "scripts":["js/webslite_background.js"]
+      },
+
+     "icons": {
+        "16": "images/icon16.png",
+        "48": "images/icon48.png",
+        "126": "images/icon126.png"
+      },
+
+      "content_scripts": [ {
+          "matches": [ "http://*/*", "https://*/*" ],
+          "js": [ "js/jquery-2.1.1.min.js", "js/fotorama.js", "js/webslite_in.js"],
+          "css": [ "css/fotorama.css"]
+      }],
+
+      "permissions": [
+        "tabs", "http://*/*", "https://*/*"
+      ]
+    }

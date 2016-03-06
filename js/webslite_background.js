@@ -4,9 +4,8 @@
 
 chrome.browserAction.onClicked.addListener(function (tab) {
     chrome.tabs.executeScript( tab.id, {
-        file: "webslite_out.js"
+        file: "js/webslite_out.js"
     }, function () {
-        console.log('fallback');
     });
 });
 

@@ -8,6 +8,6 @@ This small extension was created to learn about Chrome Extensions architecture a
 - git clone https://github.com/7rin0/Webslite.git
 - go to chrome://extensions
 - Ensure that the Developer mode checkbox in the top right-hand corner is checked
-- Load unpacked extension, navigate to the directory in which your extension files live, and select it
+- Load unpacked extension navigate to the directory Weblite/unpacked and select it
 
 ## Enjoy!

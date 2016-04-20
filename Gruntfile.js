@@ -1,8 +1,10 @@
 module.exports = function(grunt) {
 
   grunt.initConfig({
+    dir: "unpacked",
+
     jshint: {
-      files: ['Gruntfile.js', 'src/js/in.js', 'src/js/out.js', 'src/js/background.js'],
+      files: ['Gruntfile.js', '<%= dir %>/src/js/in.js', '<%= dir %>/src/js/out.js', '<%= dir %>/src/js/background.js'],
       options: {
         globals: {
           jQuery: true
@@ -12,15 +14,15 @@ module.exports = function(grunt) {
     uglify: {
       min: {
         files: {
-          'src/min/js/in.min.js': ['src/js/in.js'],
-          'src/min/js/out.min.js': ['src/js/out.js']
+          '<%= dir %>/src/min/js/in.min.js': ['<%= dir %>/src/js/in.js'],
+          '<%= dir %>/src/min/js/out.min.js': ['<%= dir %>/src/js/out.js']
         }
       }
     },
     cssmin: {
       min: {
         files: {
-          'src/min/css/main.min.css': ['src/css/main.css']
+          '<%= dir %>/src/min/css/main.min.css': ['<%= dir %>/src/css/main.css']
         }
       }
     },
@@ -31,9 +33,9 @@ module.exports = function(grunt) {
           },
           files: [{
              expand: true,
-             cwd: 'src/images',
+             cwd: '<%= dir %>/src/images',
              src: ['**/*.{png,jpg,gif,ico}'],
-             dest: 'src/min/images'
+             dest: '<%= dir %>/src/min/images'
           }]
        }
     },

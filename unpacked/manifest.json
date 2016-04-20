@@ -22,7 +22,7 @@
       "content_scripts": [ {
           "matches": [ "http://*/*", "https://*/*" ],
           "js": [ "src/dist/js/jquery-2.1.1.min.js", "src/dist/js/fotorama.js", "src/min/js/in.min.js"],
-          "css": [ "src/min/css/webslite.min.css", "src/dist/css/fotorama.css"]
+          "css": [ "src/min/css/main.min.css", "src/dist/css/fotorama.css"]
       }],
 
       "permissions": [

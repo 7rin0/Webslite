@@ -1,5 +1,4 @@
 jQuery(document).ready(function($) {
-  alert('le');
   /**
    * Get Any Image
    * From Any Data

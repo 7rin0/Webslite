@@ -4,7 +4,7 @@ This small extension was created to learn about Chrome Extensions architecture a
 ## Requirements
 - Chrome >= 18
 
-## Installations
+## Install
 - https://chrome.google.com/webstore/detail/webslite-premium/opjbnmehdmgnmdjeflamcpeeghkidneh
 
 ## Usage

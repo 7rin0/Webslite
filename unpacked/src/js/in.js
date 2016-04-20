@@ -1,10 +1,18 @@
+var getImages,
+    validateElement,
+    findDescription,
+    loadImages,
+    replaceThumbs,
+    setDimensions,
+    getWebslite;
+
 jQuery(document).ready(function($) {
   /**
    * Get Any Image
    * From Any Data
    * Get Only and Generate
    */
-  function getImages () {
+  getImages = function () {
     // Vars
     var data = $('a, img, noscript'),
         data_count = data.length,
@@ -23,10 +31,10 @@ jQuery(document).ready(function($) {
 
     // Load Slider
     $('#webslider').delay(1000).fadeIn(1000);
-  }
+  };
 
   // ****************** validateElement ******************//
-  function validateElement (element) {
+  validateElement = function (element) {
     // If noscript width image inside
     if (element.is('noscript')) {
         element = $(element.text());
@@ -91,10 +99,10 @@ jQuery(document).ready(function($) {
     } else {
       return null;
     }
-  }
+  };
 
   //****************** findDescription ******************//
-  function findDescription (element) {
+  findDescription = function (element) {
       var textImage = (element.parent().text().length > 10) ? element.parent().text() : element.parent().parent().text(),
           title = $('title').text();
 
@@ -105,10 +113,10 @@ jQuery(document).ready(function($) {
       textImage = $.trim(textImage);
 
       return textImage;
-  }
+  };
 
   // ****************** loadImage ******************//
-  function loadImages (objectos) {
+  loadImages = function (objectos) {
 
     $(objectos).each(function() {
 
@@ -135,10 +143,10 @@ jQuery(document).ready(function($) {
     }).ready(function() {
         $('#fotorama').fotorama();
     });
-  }
+  };
 
   // ****************** replaceThumbs ******************//
-  function replaceThumbs (url_image) {
+  replaceThumbs = function (url_image) {
       /** Replace: If has Thumbs in url **/
       if (url_image.indexOf('thumbs/thumbs_') != -1) {
           url_image = url_image.replace('thumbs/thumbs_', '');
@@ -174,20 +182,20 @@ jQuery(document).ready(function($) {
       }
 
       return url_image;
-  }
+  };
 
   // ****************** setDimensions ******************//
-  function setDimensions (value, genRatio) {
+  setDimensions = function (value, genRatio) {
       // Change Ratio
       var vsize = value.split('='),
           vsize_var = vsize[0],
           vsize_value = vsize[1];
 
       return (vsize_var + '=' + vsize_value * genRatio);
-  }
+  };
 
   // ****************** startWebslite ******************//
-  function getWebslite (scrollDetector) {
+  getWebslite = function (scrollDetector) {
       var body = $('body');
       body.css('overflow', 'hidden');
 
@@ -221,6 +229,6 @@ jQuery(document).ready(function($) {
           // When finished add class
           body.addClass('slide');
       });
-  }
+  };
 
 });

@@ -1,6 +1,6 @@
 {
   "name": "Webslite",
-  "version": "5.3",
+  "version": "0.5.3",
   "description": "[Chrome Extension] - Convert sites into slides",
   "author": "Luis SEVERINO",
   "bugs": "https://github.com/7rin0/webslite/issues",
@@ -11,8 +11,7 @@
   },
   "scripts": {},
   "files": [
-    "package.json",
-    "README.md"
+    "package.json"
   ],
   "devDependencies": {
     "grunt": "~1.0.1",

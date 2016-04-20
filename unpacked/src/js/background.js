@@ -3,7 +3,7 @@
  */
 chrome.browserAction.onClicked.addListener(function (tab) {
     chrome.tabs.executeScript( tab.id, {
-        file: "src/min/js/out.js"
+        file: "src/min/js/out.min.js"
     }, function () {
     });
 });

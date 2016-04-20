@@ -1,0 +1,27 @@
+{
+  "name": "Webslite",
+  "version": "5.3",
+  "description": "[Chrome Extension] - Convert sites into slides",
+  "author": "Luis SEVERINO",
+  "bugs": "https://github.com/7rin0/webslite/issues",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/7rin0/webslite.git"
+  },
+  "scripts": {},
+  "files": [
+    "package.json",
+    "README.md"
+  ],
+  "devDependencies": {
+    "grunt": "~1.0.1",
+    "grunt-contrib-cssmin": "^1.0.1",
+    "grunt-contrib-imagemin": "^1.0.0",
+    "grunt-contrib-jshint": "~1.0.0",
+    "grunt-contrib-nodeunit": "~1.0.0",
+    "grunt-contrib-uglify": "~1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "http-server": "^0.9.0"
+  }
+}

@@ -6,23 +6,23 @@
       "version": "5.3",
 
       "browser_action": {
-        "default_icon": "images/icon.png"
+        "default_icon": "src/images/icon.png"
       },
 
       "background":{
-        "scripts":["js/webslite_background.js"]
+        "scripts":["src/js/background.js"]
       },
 
      "icons": {
-        "16": "images/icon16.png",
-        "48": "images/icon48.png",
-        "126": "images/icon126.png"
+        "16": "src/images/icon16.png",
+        "48": "src/images/icon48.png",
+        "126": "src/images/icon126.png"
       },
 
       "content_scripts": [ {
           "matches": [ "http://*/*", "https://*/*" ],
-          "js": [ "js/jquery-2.1.1.min.js", "js/fotorama.js", "js/webslite_in.js"],
-          "css": [ "css/webslite.css", "css/fotorama.css"]
+          "js": [ "src/dist/js/jquery-2.1.1.min.js", "src/dist/js/fotorama.js", "src/min/js/in.min.js"],
+          "css": [ "src/min/css/webslite.min.css", "src/dist/css/fotorama.css"]
       }],
 
       "permissions": [

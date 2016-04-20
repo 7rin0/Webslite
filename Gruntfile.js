@@ -15,7 +15,8 @@ module.exports = function(grunt) {
       min: {
         files: {
           '<%= dir %>/src/min/js/in.min.js': ['<%= dir %>/src/js/in.js'],
-          '<%= dir %>/src/min/js/out.min.js': ['<%= dir %>/src/js/out.js']
+          '<%= dir %>/src/min/js/out.min.js': ['<%= dir %>/src/js/out.js'],
+          '<%= dir %>/src/min/js/background.min.js': ['<%= dir %>/src/js/background.js']
         }
       }
     },

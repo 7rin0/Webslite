@@ -10,7 +10,7 @@
       },
 
       "background":{
-        "scripts":["src/js/background.js"]
+        "scripts":["src/js/min/background.min.js"]
       },
 
      "icons": {

@@ -3,7 +3,7 @@
  */
 chrome.browserAction.onClicked.addListener(function (tab) {
     chrome.tabs.executeScript( tab.id, {
-        file: "js/webslite_out.js"
+        file: "src/min/js/out.js"
     }, function () {
     });
 });

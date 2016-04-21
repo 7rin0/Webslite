@@ -51,7 +51,7 @@ jQuery(document).ready(function($) {
     $('#circleG').remove();
 
     // If no images where found leave now! or echo message
-    if (!$('#document_slider img').length) {
+    if ($('#document_slider img').length < 0) {
       $('#document_slider').append('<div style=" color: white; font-size: 3em; line-height: 1.5em; /* height: 100%; */ vertical-align: middle; width: 50%; height: 25%; overflow: auto; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; ">Sorry!<br> No relevante images where found!</div>');
     }
   };

@@ -3,7 +3,7 @@
 
       "name": "Webslite Premium",
       "description": "Webslite - Turn Website into Webslide",
-      "version": "5.5",
+      "version": "5.6",
 
       "browser_action": {
         "default_icon": "src/images/icon.png"

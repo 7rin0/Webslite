@@ -13,13 +13,15 @@ jQuery(document).ready(function($) {
     });
 
     $(document).on('click', function(e) {
-      $('body').css('overflow', 'auto').animate(
-        { scrollTop: 0 },
-        0,
-        function () {
-          $('#document_slider').hide();
-        }
-      );
+      if($('#document_slider').is(':visible')) {
+        $('body').css('overflow', 'auto').animate(
+          { scrollTop: 0 },
+          0,
+          function () {
+            $('#document_slider').hide();
+          }
+        );
+      }
     });
 
   /**
@@ -47,6 +49,11 @@ jQuery(document).ready(function($) {
     // Load Slider
     $('#webslider').delay(1000).fadeIn(1000);
     $('#circleG').remove();
+
+    // If no images where found leave now! or echo message
+    if (!$('#document_slider img').length) {
+      $('#document_slider').append('<div style=" color: white; font-size: 3em; line-height: 1.5em; /* height: 100%; */ vertical-align: middle; width: 50%; height: 25%; overflow: auto; margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; ">Sorry!<br> No relevante images where found!</div>');
+    }
   };
 
   // ****************** validateElement ******************//

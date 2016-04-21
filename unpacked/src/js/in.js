@@ -8,15 +8,19 @@ var getImages,
 
 jQuery(document).ready(function($) {
 
-  $(document).on('click', "div", function() {
-      if ($(this).attr("id") == "fotorama") {
-          // inside
-  console.log('inside');
-      } else {
-          // not inside
-  console.log('not inside');
-      }
-  });
+    $(document).on('click', "#fotorama", function(e) {
+      e.stopPropagation();
+    });
+
+    $(document).on('click', function(e) {
+      $('body').css('overflow', 'auto').animate(
+        { scrollTop: 0 },
+        0,
+        function () {
+          $('#document_slider').hide();
+        }
+      );
+    });
 
   /**
    * Get Any Image
@@ -42,6 +46,7 @@ jQuery(document).ready(function($) {
 
     // Load Slider
     $('#webslider').delay(1000).fadeIn(1000);
+    $('#circleG').remove();
   };
 
   // ****************** validateElement ******************//
@@ -209,6 +214,11 @@ jQuery(document).ready(function($) {
   getWebslite = function (scrollDetector) {
       var body = $('body');
       body.css('overflow', 'hidden');
+
+      if($('#document_slider').length) {
+        $('#document_slider').fadeIn(500);
+        return true;
+      }
 
       // Append Slide
       body.prepend(

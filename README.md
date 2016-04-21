@@ -4,7 +4,10 @@ This small extension was created to learn about Chrome Extensions architecture a
 ## Requirements
 - Chrome >= 18
 
-## Installation
+## Install
+- https://chrome.google.com/webstore/detail/webslite-premium/opjbnmehdmgnmdjeflamcpeeghkidneh
+
+## Usage
 - git clone https://github.com/7rin0/Webslite.git
 - go to chrome://extensions
 - Ensure that the Developer mode checkbox in the top right-hand corner is checked

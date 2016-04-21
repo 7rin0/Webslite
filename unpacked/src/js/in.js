@@ -7,6 +7,17 @@ var getImages,
     getWebslite;
 
 jQuery(document).ready(function($) {
+
+  $(document).on('click', "div", function() {
+      if ($(this).attr("id") == "fotorama") {
+          // inside
+  console.log('inside');
+      } else {
+          // not inside
+  console.log('not inside');
+      }
+  });
+
   /**
    * Get Any Image
    * From Any Data
